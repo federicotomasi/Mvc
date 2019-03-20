@@ -1768,6 +1768,23 @@ namespace Microsoft.AspNetCore.Mvc
         }
 
         /// <summary>
+        /// Creates an <see cref="TeapotResult"/> that produces a <see cref="StatusCodes.Status418ImATeapot"/> response.
+        /// </summary>
+        /// <returns>The created <see cref="TeapotResult"/> for the response.</returns>
+        [NonAction]
+        public virtual TeapotResult Teapot()
+            => new TeapotResult();
+
+        /// <summary>
+        /// Creates an <see cref="TeapotObjectResult"/> that produces a <see cref="StatusCodes.Status418ImATeapot"/> response.
+        /// </summary>
+        /// <param name="error">An error object to be returned to the client.</param>
+        /// <returns>The created <see cref="TeapotObjectResult"/> for the response.</returns>
+        [NonAction]
+        public virtual TeapotObjectResult Teapot([ActionResultObjectValue] object error)
+            => new TeapotObjectResult(error);
+
+        /// <summary>
         /// Creates an <see cref="UnprocessableEntityResult"/> that produces a <see cref="StatusCodes.Status422UnprocessableEntity"/> response.
         /// </summary>
         /// <returns>The created <see cref="UnprocessableEntityResult"/> for the response.</returns>

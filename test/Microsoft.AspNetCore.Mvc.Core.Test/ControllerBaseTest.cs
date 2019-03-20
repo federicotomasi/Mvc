@@ -1933,6 +1933,59 @@ namespace Microsoft.AspNetCore.Mvc.Core.Test
         }
 
         [Fact]
+        public void HttpIAmATeapot_SetsStatusCode()
+        {
+            // Arrange
+            var controller = new TestableController();
+
+            // Act
+            var result = controller.Teapot();
+
+            // Assert
+            Assert.IsType<TeapotResult>(result);
+            Assert.Equal(StatusCodes.Status418ImATeapot, result.StatusCode);
+        }
+
+        [Fact]
+        public void HttpIAmATeapot_SetsStatusCodeAndResponseContent()
+        {
+            // Arrange
+            var controller = new TestableController();
+
+            // Act
+            var result = controller.Teapot(@"I'm a teapot
++
++                       (
++            _           ) )
++         _,(_)._        ((
++    ___,(_______).        )
++  ,'__.   /       \    /\_
++ /,' /  |""|       \  /  /
++| | |   |__|       |,'  /
++ \`.|                  /
++  `. :           :    /
++    `.            :.,'
++      `-.________,-'");
+
+            // Assert
+            Assert.IsType<TeapotObjectResult>(result);
+            Assert.Equal(StatusCodes.Status418ImATeapot, result.StatusCode);
+            Assert.Equal(@"I'm a teapot
++
++                       (
++            _           ) )
++         _,(_)._        ((
++    ___,(_______).        )
++  ,'__.   /       \    /\_
++ /,' /  |""|       \  /  /
++| | |   |__|       |,'  /
++ \`.|                  /
++  `. :           :    /
++    `.            :.,'
++      `-.________,-'", result.Value);
+        }
+
+        [Fact]
         public void HttpNotFound_SetsStatusCode()
         {
             // Arrange
